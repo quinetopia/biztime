@@ -64,7 +64,6 @@ router.put("/:code", async function(req, res, next) {
                             WHERE code=$1`, 
                             [code])
     
-    if (originalRecord.length = 0) throw new ExpressError("Not found!", 404);
               
     newName = newName ? newName : originalRecord.name;
     newCode = newCode ? newCode : originalRecord.code;
@@ -78,6 +77,8 @@ router.put("/:code", async function(req, res, next) {
                        RETURNING code, name, description`,
                        [code, name, description]);
 
+    if (results.length = 0) throw new ExpressError("Not found!", 404);
+    
     return res.json({"company" : results.rows[0]});
   }
   catch(err){
