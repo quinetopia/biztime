@@ -1,5 +1,6 @@
 const express = require("express");
 const db = require("../db");
+const ExpressError = require("../expressError")
 
 const router = new express.Router;
 
@@ -63,7 +64,7 @@ router.put("/:code", async function(req, res, next) {
                             WHERE code=$1`, 
                             [code])
     
-    if originalRecord.length = 0 throw 
+    if (originalRecord.length = 0) throw new ExpressError("Not found!", 404);
               
     newName = newName ? newName : originalRecord.name;
     newCode = newCode ? newCode : originalRecord.code;
